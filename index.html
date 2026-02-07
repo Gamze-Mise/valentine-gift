@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Valentine Gift ❤️</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="language-selector">
+        <button class="lang-btn" id="langBtn" onclick="toggleLanguageMenu()">🌐</button>
+        <div class="lang-menu" id="langMenu">
+            <button class="lang-option" onclick="changeLanguage('tr')">🇹🇷 TR</button>
+            <button class="lang-option" onclick="changeLanguage('en')">🇬🇧 EN</button>
+            <button class="lang-option" onclick="changeLanguage('cs')">🇨🇿 CS</button>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1 id="headerName"></h1>
+            </div>
+            <div class="card-content">
+                <p class="message-line"></p>
+                <p class="message-line"></p>
+            </div>
+            <div class="buttons">
+                <button class="btn btn-yes"></button>
+                <button class="btn btn-no" id="noBtn"></button>
+            </div>
+        </div>
+    </div>
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
