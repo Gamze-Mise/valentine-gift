@@ -85,7 +85,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0 auto;
+    padding: 0;
+    min-height: calc(100vh - 100px);
 }
+
 
 .card {
     background: white;
@@ -95,17 +99,128 @@ body {
     width: 100%;
     max-width: 100%;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: fadeIn 0.5s ease-in;
+    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     position: relative;
     z-index: 1;
     margin: 0 auto;
+    cursor: pointer;
+    transform-origin: center center;
+}
+
+/* Mektup kapalı durumu */
+.card.closed {
+    width: 280px;
+    height: 200px;
+    padding: 20px;
+    max-width: 280px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+    background: linear-gradient(135deg, #fff 0%, #ffeef8 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.card.closed::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+    z-index: 2;
+}
+
+.card.closed::after {
+    content: '💌';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    z-index: 3;
+    animation: letterPulse 2s ease-in-out infinite;
+}
+
+@keyframes letterPulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
+/* Mektup açık durumu */
+.card.opened {
+    width: 100%;
+    max-width: 100%;
+    padding: 50px 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(255, 105, 180, 0.2);
+    background: white;
+    animation: openLetter 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    cursor: default;
+}
+
+@keyframes openLetter {
+    0% {
+        transform: scale(0.8) rotateY(-10deg);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.05) rotateY(5deg);
+    }
+    100% {
+        transform: scale(1) rotateY(0deg);
+        opacity: 1;
+    }
+}
+
+.card.closed .card-header,
+.card.closed .card-content,
+.card.closed .buttons {
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+}
+
+.card.opened .card-header,
+.card.opened .card-content,
+.card.opened .buttons {
+    opacity: 1;
+    visibility: visible;
+    height: auto;
+    animation: fadeInContent 0.6s ease-in 0.3s both;
+}
+
+@keyframes fadeInContent {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card.closed::before,
+.card.closed::after {
+    display: block;
+}
+
+.card.opened::before,
+.card.opened::after {
+    display: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 25px 70px rgba(255, 105, 180, 0.3);
+    .card.closed:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 15px 40px rgba(255, 105, 180, 0.4);
     }
     
     .btn-yes:hover {
@@ -129,7 +244,10 @@ body {
 }
 
 .success-card {
-    padding: 60px 40px;
+    padding: 50px 40px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 100%;
 }
 
 @keyframes fadeIn {
@@ -146,6 +264,7 @@ body {
 .card-content {
     margin-bottom: 60px;
 }
+
 
 .card-header {
     margin-bottom: 30px;
@@ -273,12 +392,12 @@ body {
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-    .card {
+    .card.opened {
         padding: 45px 35px;
     }
     
     .success-card {
-        padding: 55px 35px;
+        padding: 45px 35px;
     }
 }
 
@@ -312,13 +431,13 @@ body {
         padding: 0 5px;
     }
     
-    .card {
+    .card.opened {
         padding: 35px 25px;
         border-radius: 15px;
     }
     
     .success-card {
-        padding: 45px 25px;
+        padding: 35px 25px;
     }
     
     .card-header h1 {
@@ -395,13 +514,19 @@ body {
         padding: 0;
     }
     
-    .card {
+    .card.closed {
+        width: 240px;
+        height: 180px;
+        padding: 15px;
+    }
+    
+    .card.opened {
         padding: 30px 20px;
         border-radius: 15px;
     }
     
     .success-card {
-        padding: 35px 20px;
+        padding: 30px 20px;
     }
     
     .card-header {
@@ -467,12 +592,12 @@ body {
         padding: 5px;
     }
     
-    .card {
+    .card.opened {
         padding: 25px 15px;
     }
     
     .success-card {
-        padding: 30px 15px;
+        padding: 25px 15px;
     }
     
     .card-header h1 {
